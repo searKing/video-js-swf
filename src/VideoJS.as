@@ -1,10 +1,10 @@
 package{
-
+	
+	import com.videojs.Base64;;
     import com.videojs.VideoJSApp;
     import com.videojs.events.VideoJSEvent;
     import com.videojs.structs.ExternalEventName;
     import com.videojs.structs.ExternalErrorEventName;
-    import com.videojs.Base64;
 
     import flash.display.Sprite;
     import flash.display.StageAlign;
@@ -20,6 +20,10 @@ package{
     import flash.utils.ByteArray;
     import flash.utils.Timer;
     import flash.utils.setTimeout;
+    import flash.display.BitmapData;
+    import com.adobe.images.JPGEncoder;
+
+//	import com.sociodox.utils.Base64;
 
     [SWF(backgroundColor="#000000", frameRate="60", width="480", height="270")]
     public class VideoJS extends Sprite{
@@ -79,6 +83,8 @@ package{
                 ExternalInterface.addCallback("vjs_setProperty", onSetPropertyCalled);
                 ExternalInterface.addCallback("vjs_autoplay", onAutoplayCalled);
                 ExternalInterface.addCallback("vjs_src", onSrcCalled);
+				ExternalInterface.addCallback("vjs_snap", onSnapCalled);
+				
                 ExternalInterface.addCallback("vjs_load", onLoadCalled);
                 ExternalInterface.addCallback("vjs_play", onPlayCalled);
                 ExternalInterface.addCallback("vjs_pause", onPauseCalled);
@@ -410,6 +416,21 @@ package{
             _app.model.src = String(pSrc);
           }
         }
+		
+		private function onSnapCalled():String{
+			
+			var imager:BitmapData = new BitmapData(stage.width,stage.height);
+			imager.draw(this);
+//			var encoded:String = Base64.encode(imager.getPixels(imager.rect));  
+			
+			
+			var jpgCoder:JPGEncoder = new JPGEncoder();
+			var bytes:ByteArray = jpgCoder.encode(imager);
+			// Encode picels in a Base64 string  
+			var encoded:String = Base64.encode(bytes);  
+			
+			return encoded;
+		}
 
         private function onLoadCalled():void{
             _app.model.load();
