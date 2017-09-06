@@ -6,6 +6,9 @@ _(none)_
 
 --------------------
 
+## 5.4.2 (2017-09-07)
+* searKing: add support for taking a snapshot of current flash player
+
 ## 5.4.1 (2017-07-25)
 * chore: update broken URLs
 * fix: decouple muted() from volume=0
