@@ -29,14 +29,14 @@ package com.videojs
 			}   
 			
 			var bytes:ByteArray;
-			if(imageType.toUpperCase() == IMAGE_TYPE_PNG){
+			if(imageType.toUpperCase() == IMAGE_TYPE_PNG.toUpperCase()){
 				bytes = PNGEncoder.encode(data);
 				
-			}else if (imageType.toUpperCase() == IMAGE_TYPE_JPG){
+			}else if (imageType.toUpperCase() == IMAGE_TYPE_JPG.toUpperCase()){
 				var jpgCoder:JPGEncoder = new JPGEncoder();
 				bytes = jpgCoder.encode(data);
 				
-			}else if(imageType.toUpperCase() == IMAGE_TYPE_RGB){
+			}else if(imageType.toUpperCase() == IMAGE_TYPE_RGB.toUpperCase()){
 				bytes= data.getPixels(data.rect);   
 				bytes.writeShort(data.width);   
 				bytes.writeShort(data.height);   
@@ -74,7 +74,7 @@ package com.videojs
 				throw new Error("bytes参数不能为空!");   
 			}   
 			
-			if(imageType.toUpperCase() != IMAGE_TYPE_RGB){
+			if(imageType.toUpperCase() != IMAGE_TYPE_RGB.toUpperCase()){
 				throw new Error("imageType("+imageType+")参数只支持("+IMAGE_TYPE_RGB+")!");   
 			}
 			bytes.uncompress();   
@@ -98,14 +98,14 @@ package com.videojs
 		
 		private static function getDataUrlPrefix(imageType:String = IMAGE_TYPE_PNG):String{
 			
-			if(imageType.toUpperCase() == IMAGE_TYPE_PNG){
+			if(imageType.toUpperCase() == IMAGE_TYPE_PNG.toUpperCase()){
 				return "data:image/png;base64,";
 				
-			}else if(imageType.toUpperCase() == IMAGE_TYPE_JPG){
+			}else if(imageType.toUpperCase() == IMAGE_TYPE_JPG.toUpperCase()){
 				var jpgCoder:JPGEncoder = new JPGEncoder();
 				return "data:image/jpg;base64,";
 				
-			}else if(imageType.toUpperCase() == IMAGE_TYPE_RGB){
+			}else if(imageType.toUpperCase() == IMAGE_TYPE_RGB.toUpperCase()){
 				return "data:image/jpg;rgb,"
 			}else{
 				throw new Error("imageType("+imageType+")参数非法!");   

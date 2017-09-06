@@ -31,8 +31,6 @@ package{
     public class VideoJS extends Sprite{
 
         public const VERSION:String = CONFIG::version;
-		public const IMAGE_TYPE_PNG:String = "png";
-		public const IMAGE_TYPE_JPG:String = "jpg";
 
         private var _app:VideoJSApp;
         private var _stageSizeTimer:Timer;
@@ -421,11 +419,14 @@ package{
           }
         }
 		
-		private function onSnapCalled(pImageType:String = IMAGE_TYPE_PNG):String{
+		private function onSnapCalled(pImageType:String = ""):String{
+			if(pImageType.length==0){
+				pImageType = BitmapBytes.IMAGE_TYPE_PNG;
+			}
 			
 			var imager:BitmapData = new BitmapData(stage.width,stage.height);
 			imager.draw(this);
-			return BitmapBytes.bitmapDataToDataURL(imager);
+			return BitmapBytes.bitmapDataToDataURL(imager, pImageType);
 		}
 
         private function onLoadCalled():void{
