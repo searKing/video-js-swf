@@ -1,6 +1,7 @@
 package{
 	
-	import com.videojs.Base64;;
+	import com.videojs.Base64;
+	import com.videojs.BitmapBytes;
     import com.videojs.VideoJSApp;
     import com.videojs.events.VideoJSEvent;
     import com.videojs.structs.ExternalEventName;
@@ -22,6 +23,7 @@ package{
     import flash.utils.setTimeout;
     import flash.display.BitmapData;
     import com.adobe.images.JPGEncoder;
+    import com.adobe.images.PNGEncoder;
 
 //	import com.sociodox.utils.Base64;
 
@@ -29,6 +31,8 @@ package{
     public class VideoJS extends Sprite{
 
         public const VERSION:String = CONFIG::version;
+		public const IMAGE_TYPE_PNG:String = "png";
+		public const IMAGE_TYPE_JPG:String = "jpg";
 
         private var _app:VideoJSApp;
         private var _stageSizeTimer:Timer;
@@ -417,19 +421,11 @@ package{
           }
         }
 		
-		private function onSnapCalled():String{
+		private function onSnapCalled(pImageType:String = IMAGE_TYPE_PNG):String{
 			
 			var imager:BitmapData = new BitmapData(stage.width,stage.height);
 			imager.draw(this);
-//			var encoded:String = Base64.encode(imager.getPixels(imager.rect));  
-			
-			
-			var jpgCoder:JPGEncoder = new JPGEncoder();
-			var bytes:ByteArray = jpgCoder.encode(imager);
-			// Encode picels in a Base64 string  
-			var encoded:String = Base64.encode(bytes);  
-			
-			return encoded;
+			return BitmapBytes.bitmapDataToDataURL(imager);
 		}
 
         private function onLoadCalled():void{
